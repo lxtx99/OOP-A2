@@ -1,4 +1,4 @@
-public class Person {
+public abstract class Person {
     // 实例变量
     private String name;
     private int age;
