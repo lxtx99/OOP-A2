@@ -1,8 +1,15 @@
-public class Ride {
-    private String name;  // 游乐设施的名称
-    private String type;  // 游乐设施的类型（例如：过山车、水上骑手等）
-    private boolean isOpen;  // 游乐设施是否开放
-    private Employee operator;  // 操作员，负责运行该设施
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+public class Ride implements RideInterface {
+    private String name;
+    private String type;
+    private boolean isOpen;
+    private Employee operator;
+    private Queue<Visitor> visitorQueue;  // 游客队列
+    private List<Visitor> rideHistory;  // 乘车历史
 
     // 默认构造函数
     public Ride() {
@@ -10,6 +17,8 @@ public class Ride {
         this.type = "Unknown Type";
         this.isOpen = false;
         this.operator = new Employee();  // 默认分配一个操作员
+        this.visitorQueue = new LinkedList<>();
+        this.rideHistory = new ArrayList<>();
     }
 
     // 带参数的构造函数
@@ -18,10 +27,71 @@ public class Ride {
         this.type = type;
         this.isOpen = isOpen;
         this.operator = operator;
+        this.visitorQueue = new LinkedList<>();
+        this.rideHistory = new ArrayList<>();
+    }
+
+    // 实现 addVisitorToQueue 方法
+    @Override
+    public void addVisitorToQueue(Visitor visitor) {
+        visitorQueue.offer(visitor);  // 将游客添加到队列
+    }
+
+    // 实现 removeVisitorFromQueue 方法
+    @Override
+    public void removeVisitorFromQueue(Visitor visitor) {
+        visitorQueue.remove(visitor);  // 从队列中移除游客
+    }
+
+    // 实现 printQueue 方法
+    @Override
+    public void printQueue() {
+        System.out.println("Visitor Queue:");
+        for (Visitor visitor : visitorQueue) {
+            System.out.println(visitor);
+        }
+    }
+
+    // 实现 runOneCycle 方法
+    @Override
+    public void runOneCycle() {
+        if (!visitorQueue.isEmpty()) {
+            Visitor visitor = visitorQueue.poll();  // 取出队列中的第一个游客
+            System.out.println(visitor.getName() + " is riding the " + name + "!");
+            addVisitorToHistory(visitor);  // 将游客添加到乘车历史
+        } else {
+            System.out.println("No visitors in queue.");
+        }
+    }
+
+    // 实现 addVisitorToHistory 方法
+    @Override
+    public void addVisitorToHistory(Visitor visitor) {
+        rideHistory.add(visitor);  // 将游客添加到乘车历史
+    }
+
+    // 实现 checkVisitorFromHistory 方法
+    @Override
+    public boolean checkVisitorFromHistory(Visitor visitor) {
+        return rideHistory.contains(visitor);  // 检查游客是否在历史记录中
+    }
+
+    // 实现 numberOfVisitors 方法
+    @Override
+    public int numberOfVisitors() {
+        return rideHistory.size();  // 返回乘车历史记录中的游客数
+    }
+
+    // 实现 printRideHistory 方法
+    @Override
+    public void printRideHistory() {
+        System.out.println("Ride History:");
+        for (Visitor visitor : rideHistory) {
+            System.out.println(visitor);
+        }
     }
 
     // Getter 和 Setter 方法
-
     public String getName() {
         return name;
     }
@@ -54,7 +124,6 @@ public class Ride {
         this.operator = operator;
     }
 
-    // 重写 toString 方法
     @Override
     public String toString() {
         return "Ride{name='" + name + "', type='" + type + "', isOpen=" + isOpen + ", operator=" + operator + "}";
