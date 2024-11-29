@@ -34,21 +34,35 @@ public class Ride implements RideInterface {
     // 实现 addVisitorToQueue 方法
     @Override
     public void addVisitorToQueue(Visitor visitor) {
-        visitorQueue.offer(visitor);  // 将游客添加到队列
+        if (visitor != null) {
+            visitorQueue.offer(visitor);  // 将游客添加到队列
+            System.out.println(visitor.getName() + " has been added to the queue.");
+        } else {
+            System.out.println("Failed to add visitor to the queue: Visitor is null.");
+        }
     }
 
     // 实现 removeVisitorFromQueue 方法
     @Override
     public void removeVisitorFromQueue(Visitor visitor) {
-        visitorQueue.remove(visitor);  // 从队列中移除游客
+        if (visitorQueue.contains(visitor)) {
+            visitorQueue.remove(visitor);  // 从队列中移除游客
+            System.out.println(visitor.getName() + " has been removed from the queue.");
+        } else {
+            System.out.println("Failed to remove visitor: Visitor not found in the queue.");
+        }
     }
 
     // 实现 printQueue 方法
     @Override
     public void printQueue() {
-        System.out.println("Visitor Queue:");
-        for (Visitor visitor : visitorQueue) {
-            System.out.println(visitor);
+        if (visitorQueue.isEmpty()) {
+            System.out.println("The queue is empty.");
+        } else {
+            System.out.println("Visitor Queue:");
+            for (Visitor visitor : visitorQueue) {
+                System.out.println(visitor.getName());  // 假设Visitor类有getName()方法
+            }
         }
     }
 
@@ -87,7 +101,7 @@ public class Ride implements RideInterface {
     public void printRideHistory() {
         System.out.println("Ride History:");
         for (Visitor visitor : rideHistory) {
-            System.out.println(visitor);
+            System.out.println(visitor.getName());  // 假设Visitor类有getName()方法
         }
     }
 
