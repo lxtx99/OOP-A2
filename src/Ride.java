@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -103,6 +105,11 @@ public class Ride implements RideInterface {
         for (Visitor visitor : rideHistory) {
             System.out.println(visitor.getName());  // 假设Visitor类有getName()方法
         }
+    }
+
+    // 新增：根据Comparator接口对rideHistory进行排序的方法
+    public void sortRideHistory(Comparator<Visitor> comparator) {
+        Collections.sort(rideHistory, comparator);
     }
 
     // Getter 和 Setter 方法
