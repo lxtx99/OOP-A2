@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+
 public class Ride implements RideInterface {
     private String name;
     private String type;
@@ -182,5 +183,10 @@ public class Ride implements RideInterface {
     @Override
     public String toString() {
         return "Ride{name='" + name + "', type='" + type + "', isOpen=" + isOpen + ", operator=" + operator + ", maxRider=" + maxRider + ", numOfCycles=" + numOfCycles + "}";
+    }
+    // 添加getRideHistory()方法，用于获取rideHistory列表
+
+    public List<Visitor> getRideHistory() {
+         return rideHistory;
     }
 }

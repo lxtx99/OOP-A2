@@ -1,3 +1,8 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
 public class AssignmentTwo {
     public static void main(String[] args) {
         // 在 main 方法中调用 partThree 方法来测试
@@ -10,6 +15,9 @@ public class AssignmentTwo {
         assignment.partFourB();
 
         assignment.partFive();
+             
+        assignment.partSix();
+        
         
     }
 
@@ -157,7 +165,50 @@ public class AssignmentTwo {
     }
 
     public void partSix() {
-        // 你可以根据需要在此方法中添加相应功能
+        // 创建一个新的 Ride 对象
+        Employee rideOperator = new Employee("Mike Johnson", 38, "Male", "888-999-1234", "E003", "Ride Operator");
+        Ride fireworks = new Ride("Fireworks", "Family", true, rideOperator, 6);
+ 
+        // 创建一些 Visitor 对象
+        Visitor visitor1 = new Visitor("Jack", 25, "Male", "111-222-3333", "Adult", false);
+        Visitor visitor2 = new Visitor("Emily", 31, "Female", "222-333-4444", "Adult", false);
+        Visitor visitor3 = new Visitor("Zach", 28, "Male", "333-444-5555", "Student", true);
+        Visitor visitor4 = new Visitor("Lena", 22, "Female", "444-555-6666", "Student", false);
+        Visitor visitor5 = new Visitor("Michael", 35, "Male", "555-666-7777", "Adult", true);
+ 
+        // 假设这些游客已经乘坐了 Fireworks（在实际应用中，这部分逻辑会由 rideOneCycle 方法处理）
+        fireworks.addVisitorToHistory(visitor1);
+        fireworks.addVisitorToHistory(visitor2);
+        fireworks.addVisitorToHistory(visitor3);
+        fireworks.addVisitorToHistory(visitor4);
+        fireworks.addVisitorToHistory(visitor5);
+ 
+        // 将访客信息导出为文件
+        String filePath = "ride_history.csv";
+        exportRideHistory(fireworks, filePath);
+    }
+ 
+    // 辅助方法：将Ride的访客历史记录导出到CSV文件
+    private void exportRideHistory(Ride ride, String filePath) {
+        List<Visitor> visitors = ride.getRideHistory();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (Visitor visitor : visitors) {
+                // 将Visitor对象的详细信息按照CSV格式写入文件
+                String line = String.format("%s,%s,%s,%s,%s,%b",
+                        visitor.getName(),
+                        visitor.getAge(),
+                        visitor.getGender(),
+                        visitor.getPhone(),
+                        visitor.getTicketType(),
+                        visitor.isVIP()
+                );
+                writer.write(line);
+                writer.newLine();
+            }
+            System.out.println("Ride history exported to " + filePath + " successfully.");
+        } catch (IOException e) {
+            System.err.println("Error exporting ride history: " + e.getMessage());
+        }
     }
 
     public void partSeven() {
