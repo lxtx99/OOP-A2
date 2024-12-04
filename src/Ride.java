@@ -205,7 +205,7 @@ public class Ride implements RideInterface {
             while ((line = br.readLine()) != null) {
                 // 使用逗号分隔每一行的数据
                 String[] data = line.split(",");
-                if (data.length == 5) { // 确保数据完整性
+                if (data.length == 6) { // 确保数据完整性
                     String Name = data[0];
                     int age = Integer.parseInt(data[1]);
                     String gender = data[2];
