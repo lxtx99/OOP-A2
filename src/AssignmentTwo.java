@@ -17,6 +17,8 @@ public class AssignmentTwo {
         assignment.partFive();
              
         assignment.partSix();
+
+        assignment.partSeven();
         
         
     }
@@ -212,6 +214,21 @@ public class AssignmentTwo {
     }
 
     public void partSeven() {
-        // 你可以根据需要在此方法中添加相应功能
+        // 创建一个新的Ride对象
+        Employee rideOperator = new Employee("Mike Johnson", 38, "Male", "888-999-1234", "E003", "Ride Operator");
+        Ride fireworks = new Ride("Fireworks", "Family", true, rideOperator, 6);
+ 
+        // 导入之前创建的ride_history.csv文件
+        String filePath = "ride_history.csv";
+        try {
+            fireworks.importRideHistory(filePath);
+            // 打印LinkedList中的访客数量（注意：原代码中未提供LinkedList的直接访问，这里仅验证rideHistory）
+            System.out.println("Number of visitors in ride history: " + fireworks.numberOfVisitors());
+            // 打印LinkedList中的所有访客（这里打印的是rideHistory）
+            fireworks.printRideHistory();
+        } catch (IOException e) {
+            System.err.println("Error importing ride history: " + e.getMessage());
+        }
     }
+    
 }
