@@ -14,24 +14,24 @@ public class Ride implements RideInterface {
     private String type;
     private boolean isOpen;
     private Employee operator;
-    private Queue<Visitor> visitorQueue ; // 游客队列
-    private List<Visitor> rideHistory; // 乘车历史
-    private int maxRider; // 一个周期内可以容纳的最大游客数
-    private int numOfCycles; // 骑行运行的次数
+    private Queue<Visitor> visitorQueue ; // Tourist queue
+    private List<Visitor> rideHistory; // Ride history
+    private int maxRider; // The maximum number of visitors that can be accommodated in a cycle
+    private int numOfCycles; // The number of rides run
 
-    // 默认构造函数
+    // Default constructor
     public Ride() {
         this.name = "Unknown Ride";
         this.type = "Unknown Type";
         this.isOpen = false;
-        this.operator = new Employee(); // 默认分配一个操作员
+        this.operator = new Employee(); 
         this.visitorQueue = new LinkedList<>();
         this.rideHistory = new ArrayList<>();
-        this.maxRider = 1; // 默认至少1名游客乘坐
-        this.numOfCycles = 0; // 默认运行次数为0
+        this.maxRider = 1;
+        this.numOfCycles = 0;
     }
 
-    // 带参数的构造函数
+    // Constructor with arguments
     public Ride(String name, String type, boolean isOpen, Employee operator, int maxRider) {
         this.name = name;
         this.type = type;
@@ -39,33 +39,34 @@ public class Ride implements RideInterface {
         this.operator = operator;
         this.visitorQueue = new LinkedList<>();
         this.rideHistory = new ArrayList<>();
-        this.maxRider = maxRider; // 设置一个周期内可以容纳的最大游客数
-        this.numOfCycles = 0; // 默认运行次数为0
+        this.maxRider = maxRider; // Set the maximum number of visitors that can be accommodated in a period
+        this.numOfCycles = 0; // The default number of runs is 0
     }
 
-    // 实现 addVisitorToQueue 方法
+
+   // Implement addVisitorToQueue method
     @Override
     public void addVisitorToQueue(Visitor visitor) {
         if (visitor != null) {
-            visitorQueue.offer(visitor); // 将游客添加到队列
+            visitorQueue.offer(visitor); // Add visitors to the queue
             System.out.println(visitor.getName() + " has been added to the queue.");
         } else {
             System.out.println("Failed to add visitor to the queue: Visitor is null.");
         }
     }
 
-    // 实现 removeVisitorFromQueue 方法
+    // Implement removeVisitorFromQueue method
     @Override
     public void removeVisitorFromQueue(Visitor visitor) {
         if (visitorQueue.contains(visitor)) {
-            visitorQueue.remove(visitor); // 从队列中移除游客
+            visitorQueue.remove(visitor); // Remove visitors to the queue
             System.out.println(visitor.getName() + " has been removed from the queue.");
         } else {
             System.out.println("Failed to remove visitor: Visitor not found in the queue.");
         }
     }
 
-    // 实现 printQueue 方法
+    // Implement printQueue method
     @Override
     public void printQueue() {
         if (visitorQueue.isEmpty()) {
@@ -73,12 +74,12 @@ public class Ride implements RideInterface {
         } else {
             System.out.println("Visitor Queue:");
             for (Visitor visitor : visitorQueue) {
-                System.out.println(visitor.getName()); // 假设Visitor类有getName()方法
+                System.out.println(visitor.getName()); 
             }
         }
     }
 
-    // 实现 runOneCycle 方法
+    // Implement runOneCycle method
     @Override
     public void runOneCycle() {
         if (operator == null) {
@@ -93,48 +94,48 @@ public class Ride implements RideInterface {
 
         int ridersMoved = 0;
         while (!visitorQueue.isEmpty() && ridersMoved < maxRider) {
-            Visitor visitor = visitorQueue.poll(); // 取出队列中的第一个游客
+            Visitor visitor = visitorQueue.poll(); // Remove the first tourist in the queue
             System.out.println(visitor.getName() + " is riding the " + name + "!");
-            addVisitorToHistory(visitor); // 将游客添加到乘车历史
+            addVisitorToHistory(visitor); // Add guests to ride history
             ridersMoved++;
         }
 
-        numOfCycles++; // 运行次数增加
+        numOfCycles++; // The number of runs increases
     }
 
-    // 实现 addVisitorToHistory 方法
+    // Implement addVisitorToHistory method
     @Override
     public void addVisitorToHistory(Visitor visitor) {
-        rideHistory.add(visitor); // 将游客添加到乘车历史
+        rideHistory.add(visitor); // Add guests to ride history
     }
 
-    // 实现 checkVisitorFromHistory 方法
+    // Implement checkVisitorFromHistory method
     @Override
     public boolean checkVisitorFromHistory(Visitor visitor) {
-        return rideHistory.contains(visitor); // 检查游客是否在历史记录中
+        return rideHistory.contains(visitor); // Check if the visitor is in the history
     }
 
-    // 实现 numberOfVisitors 方法
+    // Implement numberOfVisitors method
     @Override
     public int numberOfVisitors() {
-        return rideHistory.size(); // 返回乘车历史记录中的游客数
+        return rideHistory.size(); // Return the number of tourists in the ride history
     }
 
-    // 实现 printRideHistory 方法
+    // Implement printRideHistory method
     @Override
     public void printRideHistory() {
         System.out.println("Ride History:");
         for (Visitor visitor : rideHistory) {
-            System.out.println(visitor.getName()); // 假设Visitor类有getName()方法
+            System.out.println(visitor.getName()); 
         }
     }
 
-    // 新增：根据Comparator接口对rideHistory进行排序的方法
+    // A method for sorting rideHistory based on the Comparator interface
     public void sortRideHistory(Comparator<Visitor> comparator) {
         Collections.sort(rideHistory, comparator);
     }
 
-    // Getter 和 Setter 方法
+    // Getter and Setter method
     public String getName() {
         return name;
     }
@@ -187,35 +188,35 @@ public class Ride implements RideInterface {
     public String toString() {
         return "Ride{name='" + name + "', type='" + type + "', isOpen=" + isOpen + ", operator=" + operator + ", maxRider=" + maxRider + ", numOfCycles=" + numOfCycles + "}";
     }
-    // 添加getRideHistory()方法，用于获取rideHistory列表
+
+    // Add the getRideHistory method to get the rideHistory list
 
     public List<Visitor> getRideHistory() {
          return rideHistory;
     }
 
     /**
-     * 从CSV文件中导入游客历史记录
+     * Import visitor history from CSV file
      *
-     * @param filePath CSV文件的路径
-     * @throws IOException 如果文件读取失败
+     * param filePath(The path of the CSV file) 
+     * IOException(If the file failed to read)
      */
     public void importRideHistory(String filePath) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                // 使用逗号分隔每一行的数据
+                // Use commas to separate each line of data
                 String[] data = line.split(",");
-                if (data.length == 6) { // 确保数据完整性
+                if (data.length == 6) { // Ensure data integrity
                     String Name = data[0];
                     int age = Integer.parseInt(data[1]);
                     String gender = data[2];
                     String phone = data[3];
-                    String ticketType = data[4]; // 假设CSV文件中只包含这些信息，没有VIP信息
+                    String ticketType = data[4]; // Assume that the CSV file contains only these information, but no VIP information
  
-                    // 创建Visitor对象并添加到rideHistory中（注意：这里应该添加到LinkedList中作为注册游客，但原作业要求只添加到rideHistory也给予分数）
-                    Visitor visitor = new Visitor(Name, age, gender, phone, ticketType, false); // 默认不是VIP
-                    addVisitorToHistory(visitor); // 按照作业要求，这里只是添加到乘车历史中
-                    // 如果需要注册游客（即将他们添加到LinkedList中），则需要额外实现逻辑（此逻辑未在提供的代码中明确）
+                    // Create the Visitor object and add it to the rideHistory
+                    Visitor visitor = new Visitor(Name, age, gender, phone, ticketType, false); // Default is not VIP
+                    addVisitorToHistory(visitor); // Add visitors to ride history
                 } else {
                     System.err.println("Invalid data format in file: " + line);
                 }
